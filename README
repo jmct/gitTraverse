@@ -1,0 +1,10 @@
+The goal of this Python script is to be able to collect all intermediate PDFs from a LaTeX project that has been version controlled in a git repository. 
+
+As it stands, the script will run an arbitrary command at each commit on the master branch of the git repo. By default, the script will run pdflatex at each commit and output the resulting PDFs to a new directory. Each PDF will be named using the Unix time-stamp of the commit it's based on. Clearly, there is much work to do. 
+
+TODO:
+    Implement flag to specify branch other than master
+
+    Allow user to provide arbitrary LaTeX build script.
+
+    Better output PDF naming options.
