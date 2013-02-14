@@ -7,13 +7,15 @@ argParser = argparse.ArgumentParser(description='\
     for a LaTeX project from each commit in a git repository\'s history.')
 argParser.add_argument('inputFile')
 argParser.add_argument('-d', '--directory', nargs='?', default='gitTraversePDFs')
-argParser.add_argument('command', nargs='?', default='pdflatex')
+argParser.add_argument('latexBinary', nargs='?', default='pdflatex')
+argParser.add_argument('latexFlags', nargs='?', default='-halt-on-error')
 
 #Parse the arguments and instantiate object contatining argument values
 args = argParser.parse_args()
 
 #Give sensical names to each important argument.
-command = args.command #The command to be run on each commit
+command = args.latexBinary #The command to be run on each commit
+flags = args.latexFlags    #Flags to pass to the latex builder
 outputDir = '--output-directory=' +  args.directory
 inputFile = args.inputFile
 
@@ -34,7 +36,7 @@ if not os.path.exists(tempDir):
 for commit in commitList:
     check_output(['git', 'checkout', commit])
     outputFile = ('--jobname=' + check_output(commitDate)).rstrip()
-    check_output([command, outputFile, outputDir, inputFile])
+    call([command, flags, outputFile, outputDir, inputFile])
 
 #Cleanup and checkout master   
 cleanupDir = args.directory + '/'
